@@ -4,15 +4,15 @@ CREATE TYPE booking_status AS ENUM ('Pending', 'Confirmed', 'Cancelled');
 CREATE TABLE IF NOT EXISTS movie (
     movie_id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL UNIQUE,
-    age_limit INT CHECK (age_limit > 0),
-    duration_min INT CHECK (duration_min > 0),
-    release_year INT CHECK (release_year > 0),
+    age_limit INT NOT NULL CHECK (age_limit > 0),
+    duration_min INT NOT NULL CHECK (duration_min > 0),
+    release_year INT NOT NULL CHECK (release_year > 0),
     description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS genre (
     genre_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE
+    name VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS movie_genre (
@@ -25,17 +25,17 @@ CREATE TABLE IF NOT EXISTS movie_genre (
 
 CREATE TABLE IF NOT EXISTS cinema_hall (
     hall_id SERIAL PRIMARY KEY,
-    hall_number INT UNIQUE,
-    capacity INT CHECK (capacity > 0)
+    hall_number INT NOT NULL UNIQUE CHECK (hall_number > 0),
+    capacity INT NOT NULL CHECK (capacity > 0)
 );
 
 
 CREATE TABLE IF NOT EXISTS seat (
     seat_id SERIAL PRIMARY KEY,
-    row_number INT,
-    seat_number INT,
-    seat_type seat_type,
-    base_price DECIMAL(6,2) CHECK (base_price > 0),
+    row_number INT NOT NULL CHECK (row_number > 0),
+    seat_number INT NOT NULL CHECK (seat_number > 0),
+    seat_type seat_type NOT NULL,
+    base_price DECIMAL(6,2) NOT NULL CHECK (base_price > 0),
     hall_id INT,
     UNIQUE (hall_id, row_number, seat_number),
     FOREIGN KEY (hall_id) REFERENCES cinema_hall(hall_id)
@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS seat (
 
 CREATE TABLE IF NOT EXISTS customer (
     customer_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    email VARCHAR(255) UNIQUE,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20)
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS showtime (
 
 CREATE TABLE IF NOT EXISTS booking (
     booking_id SERIAL PRIMARY KEY,
-    total_price DECIMAL(8,2),
+    total_price DECIMAL(8,2) NOT NULL CHECK (total_price >= 0),
     status booking_status DEFAULT 'Pending',
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     customer_id INT,
@@ -72,10 +72,10 @@ CREATE TABLE IF NOT EXISTS booking (
 
 CREATE TABLE IF NOT EXISTS tariff (
     tariff_id SERIAL PRIMARY KEY,
-    name VARCHAR(30),
-    start_time TIME,
-    end_time TIME,
-    price_multiplier DECIMAL(3,2) CHECK (price_multiplier > 0),
+    name VARCHAR(30) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    price_multiplier DECIMAL(3,2) NOT NULL CHECK (price_multiplier > 0),
     CONSTRAINT valid_time_range CHECK (start_time < end_time)
 );
 
