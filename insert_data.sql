@@ -3,21 +3,27 @@ VALUES
 ('Inception', 16, 148, 2010, 'A skilled thief leads a team into people’s dreams to steal secrets.'),
 ('Interstellar', 12, 169, 2014, 'A group of astronauts travel through a wormhole to save humanity.'),
 ('The Dark Knight', 16, 152, 2008, 'Batman faces the Joker in a battle for Gotham.'),
-('Inside Out', 6, 95, 2015, 'Animated story showing the emotions inside a young girl’s mind.');
+('Inside Out', 6, 95, 2015, 'Animated story showing the emotions inside a young girl’s mind.'),
+('Dune', 12, 155, 2021, 'A noble family becomes embroiled in a war for control over the desert planet Arrakis.'),
+('The Matrix', 16, 136, 1999, 'A computer hacker learns about the true nature of reality and his role in the war against its controllers.');
 
 INSERT INTO genre (name)
 VALUES
 ('Sci-Fi'),
 ('Action'),
 ('Drama'),
-('Animation');
+('Animation'),
+('Adventure'),
+('Fantasy');
 
 INSERT INTO movie_genre (movie_id, genre_id)
 VALUES
 (1, 1), (1, 3),
 (2, 1), (2, 3),
 (3, 2), (3, 3),
-(4, 4), (4, 3);
+(4, 4), (4, 3),
+(5, 1), (5, 5),
+(6, 1), (6, 2);
 
 INSERT INTO cinema_hall (hall_number, capacity)
 VALUES
@@ -52,14 +58,18 @@ INSERT INTO customer (first_name, last_name, email, phone)
 VALUES
 ('Alice', 'Johnson', 'alice.johnson@example.com', '+380501112233'),
 ('Bob', 'Smith', 'bob.smith@example.com', '+380671234567'),
-('Charlie', 'Brown', 'charlie.brown@example.com', '+380931112244');
+('Charlie', 'Brown', 'charlie.brown@example.com', '+380931112244'),
+('Diana', 'Evans', 'diana.evans@example.com', '+380661234555'),
+('Edward', 'King', 'edward.king@example.com', '+380981234999');
 
 INSERT INTO showtime (show_date, show_time, movie_id, hall_id)
 VALUES
 ('2025-10-06', '18:00', 1, 1),
 ('2025-10-06', '20:30', 2, 2),
 ('2025-10-07', '16:00', 4, 1),
-('2025-10-07', '19:00', 3, 2);
+('2025-10-07', '19:00', 3, 2),
+('2025-10-08', '17:00', 5, 1),
+('2025-10-08', '20:00', 6, 2);
 
 INSERT INTO tariff (name, start_time, end_time, price_multiplier)
 VALUES
@@ -71,17 +81,18 @@ INSERT INTO booking (total_price, status, customer_id, showtime_id)
 VALUES
 (270.00, 'Confirmed', 1, 1),
 (180.00, 'Pending', 2, 2),
-(150.00, 'Confirmed', 3, 3);
+(150.00, 'Confirmed', 3, 3),
+(300.00, 'Confirmed', 4, 5),
+(240.00, 'Pending', 5, 6),
+(120.00, 'Cancelled', 2, 4);
 
 INSERT INTO booking_seat (showtime_id, seat_id, booking_id, tariff_id, final_price)
 VALUES
 (1, 4, 1, 3, 180.00),
-(1, 2, 1, 3, 90.00);
-
-INSERT INTO booking_seat (showtime_id, seat_id, booking_id, tariff_id, final_price)
-VALUES
-(2, 14, 2, 3, 180.00);
-
-INSERT INTO booking_seat (showtime_id, seat_id, booking_id, tariff_id, final_price)
-VALUES
-(3, 6, 3, 2, 150.00);
+(1, 2, 1, 3, 90.00),
+(2, 14, 2, 3, 180.00),
+(3, 6, 3, 2, 150.00),
+(5, 7, 4, 2, 90.00),
+(5, 4, 4, 2, 180.00),
+(6, 13, 5, 3, 180.00),
+(4, 10, 6, 3, 120.00); 
