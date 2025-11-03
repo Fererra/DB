@@ -22,7 +22,7 @@ WHERE status = 'Confirmed';
 -- Відсортувати фільми за тривалістю (від найкоротшого до найдовшого)
 SELECT title, duration_min
 FROM movie
-ORDER BY duration_min ASC;
+ORDER BY duration_min;
 
 -- Вибрати тарифи, у яких коефіцієнт ціни більше 1
 SELECT name, price_multiplier
@@ -38,7 +38,7 @@ WHERE booking_date > '2025-10-01';
 SELECT seat_id, row_number, seat_number, seat_type, base_price
 FROM seat
 WHERE hall_id = 1
-ORDER BY row_number, seat_number ASC;
+ORDER BY row_number, seat_number;
 
 -- Змінити статус конкретного бронювання
 UPDATE booking
