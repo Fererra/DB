@@ -49,8 +49,8 @@ model customer {
   first_name  String    @db.VarChar(100)
   last_name   String    @db.VarChar(100)
   email       String    @unique @db.VarChar(255)
-  phone       String?   @db.VarChar(20)
   booking     booking[]
+  reviews     review[]
 }
 
 model genre {
@@ -63,12 +63,25 @@ model genre {
 model movie {
   movie_id     Int           @id @default(autoincrement())
   title        String        @unique @db.VarChar(255)
+  language     String        @default("Ukranian") @db.VarChar(50)
   age_limit    Int
   duration_min Int
   release_year Int
   description  String?
   movie_genre  movie_genre[]
   showtime     showtime[]
+  reviews     review[]
+}
+
+model review {
+  review_id   Int       @id @default(autoincrement())
+  rating      Int
+  comment     String?
+  created_at  DateTime  @default(now())
+  movie_id    Int
+  customer_id Int?
+  customer    customer? @relation(fields: [customer_id], references: [customer_id])
+  movie       movie     @relation(fields: [movie_id], references: [movie_id])
 }
 
 model movie_genre {
